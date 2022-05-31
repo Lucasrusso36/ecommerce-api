@@ -1,4 +1,4 @@
-module Admin  
+module Admin
   class ProductSavingService
     class NotSavedProductError < StandardError; end
 

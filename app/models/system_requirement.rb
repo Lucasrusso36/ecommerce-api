@@ -1,8 +1,7 @@
 class SystemRequirement < ApplicationRecord
-  include NameSearchable
-  include Paginatable
-  
   has_many :games, dependent: :restrict_with_error
+  include LikeSearchable
+  include Paginatable
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :operational_system, presence: true
