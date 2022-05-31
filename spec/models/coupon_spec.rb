@@ -12,13 +12,13 @@ RSpec.describe Coupon, type: :model do
   it { is_expected.to validate_numericality_of(:max_use).only_integer.is_greater_than_or_equal_to(0) }
   it { is_expected.to validate_presence_of :due_date }
 
-  it "can't have past due_date" do
+  it "can't have past date due_date" do
     subject.due_date = 1.day.ago
     subject.valid?
     expect(subject.errors.keys).to include :due_date
   end
 
-  it "is invalid with current due_date" do
+  it "can't with current date due_date" do
     subject.due_date = Time.zone.now
     subject.valid?
     expect(subject.errors.keys).to include :due_date
@@ -30,6 +30,6 @@ RSpec.describe Coupon, type: :model do
     expect(subject.errors.keys).to_not include :due_date
   end
 
-  it_behaves_like "name searchable concern", :coupon
+  it_behaves_like "like searchable concern", :coupon, :name
   it_behaves_like "paginatable concern", :coupon
 end
