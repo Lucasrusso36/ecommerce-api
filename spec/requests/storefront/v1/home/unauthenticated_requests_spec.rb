@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Storefront V1 Home", type: :request do
   context "GET /home" do
     let(:url) { "/storefront/v1/home" }
-    
+
     let!(:featured_products) { create_list(:product, 10, featured: true) }
-    
-    let!(:cheap_products) do 
+
+    let!(:cheap_products) do
       products = []
       10.times do
         products << create(:product, price: Faker::Commerce.price(range: 5.00...90.00), featured: false)
@@ -28,11 +28,11 @@ RSpec.describe "Storefront V1 Home", type: :request do
         get url, headers: unauthenticated_header
         expect(body_json['featured'].count).to eq 4
       end
-      
+
       it "returns random featured products" do
         get url, headers: unauthenticated_header
         expected_products = featured_products.map { |product| build_game_product_json(product) }
-        expect(body_json['featured']).to satisfy do |products| 
+        expect(body_json['featured']).to satisfy do |products|
           products & expected_products == products
         end 
       end
@@ -51,7 +51,7 @@ RSpec.describe "Storefront V1 Home", type: :request do
         get url, headers: unauthenticated_header
         expect(body_json['last_releases'].count).to eq 4
       end
-      
+
       it "returns random last released products" do
         get url, headers: unauthenticated_header
         expected_products = last_released_products.map do |product| 
@@ -59,7 +59,7 @@ RSpec.describe "Storefront V1 Home", type: :request do
         end
         expect(body_json['last_releases']).to satisfy do |products| 
           products & expected_products == products
-        end 
+        end
       end
 
       it "does not returns any non-last released products" do
@@ -76,7 +76,7 @@ RSpec.describe "Storefront V1 Home", type: :request do
         get url, headers: unauthenticated_header
         expect(body_json['cheapest'].count).to eq 4
       end
-      
+
       it "returns cheapest products" do
         get url, headers: unauthenticated_header
         price_ordered_products = cheap_products.sort { |a, b| a.price <=> b.price }
@@ -100,4 +100,4 @@ RSpec.describe "Storefront V1 Home", type: :request do
     json['image_url'] = rails_blob_url(product.image)
     json
   end
-end
+end 
