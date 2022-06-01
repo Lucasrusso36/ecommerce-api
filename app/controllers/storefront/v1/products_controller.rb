@@ -1,4 +1,3 @@
-
 module Storefront::V1
   class ProductsController < ApplicationController
 
