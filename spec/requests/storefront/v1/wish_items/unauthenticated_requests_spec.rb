@@ -27,4 +27,4 @@ RSpec.describe "Storefront V1 Wish Items without authentication", type: :request
 
     include_examples "unauthenticated access"
   end
-end 
+end
